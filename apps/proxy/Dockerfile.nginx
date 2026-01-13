@@ -1,0 +1,16 @@
+FROM nginx:1.27-alpine
+
+RUN apk add --no-cache bash
+
+# Remove default config
+RUN rm /etc/nginx/conf.d/default.conf
+
+# Create certbot webroot directory
+RUN mkdir -p /var/www/certbot
+
+# Copy nginx config template
+COPY nginx.conf /etc/nginx/templates/default.conf.template
+
+EXPOSE 80 443
+
+CMD ["nginx", "-g", "daemon off;"]
